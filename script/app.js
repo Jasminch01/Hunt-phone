@@ -1,10 +1,11 @@
 //select dom elements
 const productContainer = document.getElementById("procduct-container");
+const searchInput = document.getElementById('search-input');
 
 //load data
-const loadData = async () => {
+const loadData = async (searchText) => {
   const res = await fetch(
-    "https://openapi.programming-hero.com/api/phones?search=iphone"
+    `https://openapi.programming-hero.com/api/phones?search=${searchText}`
   );
 
   const data = await res.json();
@@ -13,8 +14,10 @@ const loadData = async () => {
 };
 
 const showData = (phones) => {
+    productContainer.textContent = ''
+    console.log(phones)
   phones.forEach((phones) => {
-    console.log(phones);
+    // console.log(phones);
     const cards = document.createElement("div");
     cards.classList = `bg-white rounded-xl border`;
     cards.innerHTML = `
@@ -42,4 +45,8 @@ const showData = (phones) => {
   });
 };
 
-loadData();
+const searchHandle = () => {
+    const searchText = searchInput.value;
+    loadData(searchText);
+}
+
